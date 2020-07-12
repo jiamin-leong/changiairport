@@ -1,0 +1,117 @@
+<html>
+<head>
+  <script type='text/javascript' src='https://www.gstatic.com/charts/loader.js'></script>
+  <!-- <div id='sankey_multiple' style='width: 900px; height: 900px;'></div> -->
+  <script type='text/javascript'>
+
+  // Load Charts and Sankey Pakcage
+  google.charts.load('current', {packages:['sankey']});
+
+  // Draw Outbound Chart
+  google.charts.setOnLoadCallback(drawOutboundChart);
+
+  // Draw Inbound Chart
+  google.charts.setOnLoadCallback(drawInboundChart);
+
+  // Callback that draws OutboundChart
+  function drawOutboundChart() {
+    var data = new google.visualization.DataTable();
+    data.addColumn('string', 'From');
+    data.addColumn('string', 'To');
+    data.addColumn('number', 'Weight');
+    data.addRows([
+    ['Adelaide', 'Singapore', 1012],
+    ['Amsterdam', 'Singapore', 2024],
+    ['Auckland', 'Singapore', 2783],
+    ['Bangkok', 'Singapore', 2028],
+    ['Barcelona', 'Singapore', 1265],
+    ['Brisbane', 'Singapore', 2277],
+    ['Cebu', 'Singapore', 1810],
+    ['ChongQing', 'Singapore', 724],
+    ['Christchurch', 'Singapore', 1012],
+    ['Copenhagen', 'Singapore', 1265],
+    ['Frankfurt', 'Singapore', 3289],
+    ['Hongkong', 'Singapore', 4718],
+    ['Jakarta', 'Singapore', 6072],
+    ['Kuala Lumpur', 'Singapore', 4990],
+    ['London (Heathrow)', 'Singapore', 3289],
+    ['Los Angeles', 'Singapore', 3542],
+    ['Manila', 'Singapore', 2530],
+    ['Melbourne', 'Singapore', 1265],
+    ['Osaka', 'Singapore', 1265],
+    ['Paris', 'Singapore', 360],
+    ['Seoul', 'Singapore', 3033],
+    ['Shanghai', 'Singapore', 1064],
+    ['Sydney', 'Singapore', 5566],
+    ['Tokyo (Narita)', 'Singapore', 4381],
+    ['Zurich', 'Singapore', 3542]
+    ]);
+
+    // Set chart options
+    var options = {
+      width: 600,
+      height: 600
+    };
+
+    // Instantiate and draw our chart, passing in some options.
+    var chart = new google.visualization.Sankey(document.getElementById('outbound_sankey_multiple'));
+    chart.draw(data, options);
+   }
+
+  // Callback that draws Inbound Chart
+  function drawInboundChart() {
+    var data = new google.visualization.DataTable();
+    data.addColumn('string', 'From');
+    data.addColumn('string', 'To');
+    data.addColumn('number', 'Weight');
+    data.addRows([
+    ['Singapore', 'Adelaide', 1012],
+    ['Singapore', 'Amsterdam', 2277],
+    ['Singapore', 'Auckland', 3542],
+    ['Singapore', 'Bangkok', 2028],
+    ['Singapore', 'Barcelona', 1012],
+    ['Singapore', 'Brisbane', 2277],
+    ['Singapore', 'Cebu', 1500],
+    ['Singapore', 'ChongQing', 724],
+    ['Singapore', 'Christchurch', 1012],
+    ['Singapore', 'Copenhagen', 1012],
+    ['Singapore', 'Frankfurt', 3289],
+    ['Singapore', 'Ho Chi Minh', 1248],
+    ['Singapore', 'Hanoi', 1265],
+    ['Singapore', 'Hongkong', 4718],
+    ['Singapore', 'Jakarta', 6072],
+    ['Singapore', 'Kuala Lumpur', 4990],
+    ['Singapore', 'London (Heathrow)', 3289],
+    ['Singapore', 'Los Angeles', 3289],
+    ['Singapore', 'Manila', 2530],
+    ['Singapore', 'Melbourne', 2024],
+    ['Singapore', 'Osaka', 1265],
+    ['Singapore', 'Paris', 300],
+    ['Singapore', 'Seoul', 3033],
+    ['Singapore', 'Shanghai', 1064],
+    ['Singapore', 'Sydney', 5566],
+    ['Singapore', 'Tokyo (Narita)', 4381],
+    ['Singapore', 'Zurich', 3289]
+    ]);
+
+    // Set chart options
+    var options = {
+      width: 600,
+      height:600
+    };
+
+    // Instantiate and draw our chart, passing in some options.
+    var chart = new google.visualization.Sankey(document.getElementById('inbound_sankey_multiple'));
+    chart.draw(data, options);
+  }
+</script>
+</head>
+<body>
+    <table class = "table">
+    <tr><div id='outbound_sankey_multiple' style='width: 900px; height: 600px;'></div></tr>
+    </table>
+    <table class = "table">
+    <tr><div id='inbound_sankey_multiple' style='width: 900px; height: 600px;'></div></tr>
+  </table>
+</body>
+</html>
