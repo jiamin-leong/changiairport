@@ -1,11 +1,11 @@
 <html>
-<head>
+  <head>
   <script type='text/javascript' src='https://www.gstatic.com/charts/loader.js'></script>
   <!-- <div id='sankey_multiple' style='width: 900px; height: 900px;'></div> -->
   <script type='text/javascript'>
 
-  // Load Charts and Sankey Pakcage
-  google.charts.load('current', {packages:['sankey']});
+  // Load Charts and Sankey, Bar Package
+  google.charts.load('current', {packages:['sankey', 'bar', 'corechart']});
 
   // Draw Outbound Chart
   google.charts.setOnLoadCallback(drawOutboundChart);
@@ -13,12 +13,18 @@
   // Draw Inbound Chart
   google.charts.setOnLoadCallback(drawInboundChart);
 
+  // Draw Bar Chart
+  google.charts.setOnLoadCallback(drawBarChart);
+
+  // Draw Line Chart
+  google.charts.setOnLoadCallback(drawLineChart);
+
   // Callback that draws OutboundChart
   function drawOutboundChart() {
     var data = new google.visualization.DataTable();
     data.addColumn('string', 'From');
     data.addColumn('string', 'To');
-    data.addColumn('number', 'Weight');
+    data.addColumn('number', 'Passengers');
     data.addRows([
     ['Adelaide', 'Singapore', 1012],
     ['Amsterdam', 'Singapore', 2024],
@@ -48,9 +54,26 @@
     ]);
 
     // Set chart options
+    var colors = [ '#a6cee3', '#b2df8a', '#a6cee3'
+                ,'#a6cee3', '#a6cee3', '#a6cee3',  '#a6cee3'
+                ,'#a6cee3', '#a6cee3', '#a6cee3',  '#a6cee3'
+                ,'#a6cee3', '#a6cee3', '#a6cee3',  '#a6cee3'
+                ,'#a6cee3', '#a6cee3', '#a6cee3',  '#a6cee3'
+                , '#a6cee3', '#a6cee3', '#a6cee3', '#a6cee3'
+                , '#a6cee3','#a6cee3','#a6cee3','#a6cee3']
+
     var options = {
       width: 600,
-      height: 600
+      height:600,
+      chartArea:{width: '80%',
+      height: '80%'},
+      sankey: {
+        node: {colors:  colors},
+        link: { colors:colors
+                , fillOpacity:0.6
+                , colorMode: 'gradient'
+                }
+      }
     };
 
     // Instantiate and draw our chart, passing in some options.
@@ -63,7 +86,7 @@
     var data = new google.visualization.DataTable();
     data.addColumn('string', 'From');
     data.addColumn('string', 'To');
-    data.addColumn('number', 'Weight');
+    data.addColumn('number', 'Passengers');
     data.addRows([
     ['Singapore', 'Adelaide', 1012],
     ['Singapore', 'Amsterdam', 2277],
@@ -95,23 +118,180 @@
     ]);
 
     // Set chart options
+    var colors = [ '#a6cee3','#b2df8a','#b2df8a','#b2df8a','#b2df8a'
+                ,'#b2df8a','#b2df8a','#b2df8a','#b2df8a'
+                ,'#b2df8a','#b2df8a','#b2df8a','#b2df8a'
+                ,'#b2df8a','#b2df8a','#b2df8a','#b2df8a'
+                ,'#b2df8a','#b2df8a','#b2df8a','#b2df8a'
+                ,'#b2df8a','#b2df8a','#b2df8a','#b2df8a'
+                ,'#b2df8a','#b2df8a','#b2df8a','#b2df8a'];
+
     var options = {
       width: 600,
-      height:600
+      height:600,
+      chartArea:{width: '80%',
+      height: '80%'},
+      sankey: {
+        title: 'Total Inbound Passengers',
+        subtitle: 'Split across Countries',
+        legend: {position: 'top', maxLines:3},
+        node: {colors:  colors},
+        link: { colors:colors
+                , fillOpacity:0.6
+                , colorMode: 'gradient'
+                }
+      }
     };
 
     // Instantiate and draw our chart, passing in some options.
     var chart = new google.visualization.Sankey(document.getElementById('inbound_sankey_multiple'));
     chart.draw(data, options);
   }
+
+
+  function drawBarChart() {
+    var data = google.visualization.arrayToDataTable([
+        ['Region', 'America', 'Europe', 'North Asia', 'South East Asia',
+             'South West Pacific', {role: 'annotation'}],
+        ['2020-06-29', 1265, 4807, 5898, 6311, 5313, ''],
+        ['2020-07-06', 1518, 6578, 6792, 8200, 6072, ''],
+        ['2020-07-13', 1518, 6818, 6792, 8453, 6325, ''],
+        ['2020-07-20', 1518, 6818, 6792, 7947, 6325, ''],
+        ['2020-07-27', 1012, 4481, 4096, 6152, 5313, '']
+      ]);     
+
+    var options = {
+      chart:{
+        title: 'Weekly Passengers in-outFlow',
+        titleTextStyle: {fontName: 'Helvetica Neue',fontSize:'16'},
+        subtitle: 'Split across major regions',
+        legend: {position: 'top', maxLines:3},
+        bar: { groupWidth: '75%'}
+        }, 
+        isStacked: 'true',
+        width: 600,
+        height: 600,
+        chartArea:{width: '80%',
+        height: '80%'}
+    };
+
+    var chart = new google.charts.Bar(document.getElementById('all_passengers_barchart'));
+    chart.draw(data, google.charts.Bar.convertOptions(options));
+  }
+
+function drawLineChart() {
+  var data = new google.visualization.arrayToDataTable([
+  ['Date', 'SilkAir', 'SingaporeAirlines'],
+  [2020-07-01, 331.0, 6408.0],
+  [2020-07-02, 0.0, 4384.0],
+  [2020-07-03, 331.0, 4360.0],
+  [2020-07-04, 362.0, 4805.0],
+  [2020-07-05, 362.0, 2251.0],
+  [2020-07-06, 362.0, 4795.0],
+  [2020-07-07, 0.0, 2530.0],
+  [2020-07-08, 331.0, 3878.0],
+  [2020-07-09, 0.0, 4540.0],
+  [2020-07-10, 331.0, 4360.0],
+  [2020-07-11, 362.0, 4805.0],
+  [2020-07-12, 362.0, 2504.0],
+  [2020-07-13, 362.0, 4542.0],
+  [2020-07-14, 0.0, 2530.0],
+  [2020-07-15, 331.0, 3938.0],
+  [2020-07-16, 0.0, 4600.0],
+  [2020-07-17, 331.0, 4673.0],
+  [2020-07-18, 362.0, 5371.0],
+  [2020-07-19, 362.0, 2504.0],
+  [2020-07-20, 362.0, 4795.0],
+  [2020-07-21, 0.0, 2530.0],
+  [2020-07-22, 331.0, 3938.0],
+  [2020-07-23, 0.0, 4600.0],
+  [2020-07-24, 331.0, 4420.0],
+  [2020-07-25, 362.0, 4865.0],
+  [2020-07-26, 362.0, 2504.0],
+  [2020-07-27, 362.0, 4795.0],
+  [2020-07-28, 0.0, 2530.0],
+  [2020-07-29, 331.0, 3685.0],
+  [2020-07-30, 0.0, 4600.0],
+  [2020-07-31, 331.0, 4420.0]
+  ]);
+  
+  var options = {
+    title: 'Number of Passengers carried by Airlines Daily',
+    subtitle:'Moving forward, trend will start to continue upwards',
+    titleTextStyle: {fontName: 'Helvetica Neue',fontSize:'16',color: '#909497'},
+    width: 600,
+    height: 600,
+    chartArea:{width: '80%',
+    height: '80%'},
+    curveType: 'function',
+    legend:{position:'bottom'},
+    vAxis: {gridlines:
+              {color:'transparent'}},
+    hAxis: {gridlines:
+              {color:'transparent'}},
+    lineWidth:5,
+    series:{
+      0: {color:'#b2df8a'},
+      1: {color:'#a6cee3'},
+      }
+
+    };
+
+  var chart = new google.visualization.LineChart(document.getElementById('all_passengers_linechart'));
+  chart.draw(data, options);
+
+}
+
+
 </script>
 </head>
-<body>
+
+
+
+<!-- Rendering the HTML Text -->
+
+<body> 
+   <p style = "font-family:'Calibri', 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;font-size:25px;">
+    Changi Airport Reopens in July 2020 </p>
+  <p style = "font-family:'Calibri', 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;font-size:16px;">
+  done by: @personalprojects.py
+  </p> 
+
+  <p style = "font-family:'Calibri', 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;font-size:16px;">
+  
+  Some countries are seizing on Asia’s relative success in containing the virus to establish travel bubbles and green lanes to allow limited numbers of foreign tourists and essential workers to visit. 
+  
+
+  </p>
+  
+  <p style = "font-family:'Calibri', 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;font-size:25px;">
+    Close to 30,000 passengers arrive and depart from Changi Airport weekly  
+  </p>
+  <p style = "font-family:'Calibri', 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;font-size:16px;">
+    Singapore’s government remains wary of a new outbreak, even after lifting a lockdown in June. Singapore Airlines (SIA) and SilkAir have since increased their flight frequency to operate at approximately 6% of original scheduled capacity.
+  </p>
+
+    <table>
+    <div id="all_passengers_linechart" style="width: 600px; height: 600px;"></div>
+    </table> 
+    <table>
+    <div id="all_passengers_barchart" style="width: 600px; height: 600px;"></div>
+    </table> 
+
+    <p style = "font-family:'Calibri', 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;font-size:25px;">
+      Where do our inbound and outbound passengers come for and go to? </p>
     <table class = "table">
-    <tr><div id='outbound_sankey_multiple' style='width: 900px; height: 600px;'></div></tr>
+    <tr><div id='outbound_sankey_multiple' style='width: 1600px; height: 600px;display: inline-block;'></div></tr>
     </table>
     <table class = "table">
-    <tr><div id='inbound_sankey_multiple' style='width: 900px; height: 600px;'></div></tr>
-  </table>
+    <tr><div id='inbound_sankey_multiple' style='width: 1600px; height: 600px;'></div></tr>
+    </table>
+
+    <p style = "font-family:'Calibri', 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;font-size:25px;">
+      Resources </p>
+    <p style = "font-family:'Calibri', 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;font-size:16px;">
+    Changi Airport site
+    </p>
+
 </body>
 </html>
